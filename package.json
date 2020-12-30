@@ -38,7 +38,7 @@
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
-    "postinstall": "tsc -d && rc-tools run build && rc-tools run compile --babel-runtime",
+    "postinstall": "rc-tools run build && tsc -d && rc-tools run compile --babel-runtime",
     "prepublish": "rc-tools run guard",
     "prepare": "rc-tools run guard",
     "prepublishOnly": "rc-tools run guard",
