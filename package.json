@@ -1,6 +1,6 @@
 {
   "name": "rmc-picker",
-  "version": "5.0.10",
+  "version": "5.0.11",
   "description": "React Mobile Picker Component(web and react-native)",
   "keywords": [
     "react",
@@ -38,6 +38,7 @@
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
+    "postinstall": "tsc -d && rc-tools run build && rc-tools run compile --babel-runtime",
     "prepublish": "rc-tools run guard",
     "prepare": "rc-tools run guard",
     "prepublishOnly": "rc-tools run guard",
