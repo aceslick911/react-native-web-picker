@@ -139,6 +139,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
         evt.preventDefault();
         onMove(evt.pageY);
       },
+      mouseover: () => onFinish(),
       touchend: () => onFinish(),
       touchcancel: () => onFinish(),
       mouseup: () => onFinish(),

@@ -18,6 +18,7 @@ const getModal = (props, visible, { getContent, hide, onDismiss, onOk }) => {
       maskTransitionName={props.maskTransitionName}
       onClose={hide}
       style={props.style}
+      maskClosable={false}
     >
       <div>
         <div className={`${prefixCls}-header`}>

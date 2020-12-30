@@ -1,7 +1,6 @@
-/* tslint:disable:no-console */
-
 import 'rmc-picker/assets/index.less';
 import 'rmc-picker/assets/popup.less';
+import Picker from '../src/Picker';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Popup from '../src/Popup';
@@ -11,6 +10,17 @@ class Demo extends React.Component<any, any> {
     disabled: false,
     value: null,
   };
+
+  onChange = (value) => {
+    console.log('onChange', value);
+    this.setState({
+      value,
+    });
+  }
+
+  onScrollChange = (value) => {
+    console.log('onScrollChange', value);
+  }
 
   disable = () => {
     this.setState({
@@ -29,13 +39,26 @@ class Demo extends React.Component<any, any> {
     console.log('onDismiss');
   }
 
-  render() {
-    const popupContent = (
-      <div style={{ height: 160, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        popup content
-      </div>
-    );
+  renderPickerData = () => {
+    const items: any[] = [];
+    for (let i = 0; i < 100; i++) {
+      items.push(<Picker.Item value={i + ''} key={i}>
+        {i}
+      </Picker.Item>);
+    }
 
+    return <Picker
+      defaultSelectedValue='10'
+      selectedValue={this.state.value}
+      // disabled={this.state.disabled}
+      onValueChange={this.onChange}
+      onScrollChange={this.onScrollChange}
+    >
+      {items}
+    </Picker>
+  }
+
+  render() {
     return (
       <div style={{ margin: '10px 30px' }}>
         <h2>popup date picker</h2>
@@ -45,7 +68,7 @@ class Demo extends React.Component<any, any> {
             className="fortest"
             transitionName="rmc-picker-popup-slide-fade"
             maskTransitionName="rmc-picker-popup-fade"
-            content={popupContent}
+            content={this.renderPickerData()}
             title="Picker"
             disabled={this.state.disabled}
             onDismiss={this.onDismiss}
