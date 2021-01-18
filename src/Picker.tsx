@@ -86,7 +86,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
 
       let time = .3;
 
-      const velocity = Velocity.getVelocity(targetY) * 4;
+      const velocity = Velocity.getVelocity(targetY) * 2;
       if (velocity) {
         targetY = velocity * 40 + targetY;
         time = Math.abs(velocity) * .1;
@@ -128,6 +128,25 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
       setTransform(this.contentRef.style, `translate3d(0,${-scrollY}px,0)`);
     };
 
+    const wheelDistance = (evt) => {
+      const { wheelDeltaY, deltaY } = evt;
+
+      const direction = (evt.detail < 0 || evt.wheelDelta > 0) ? 1 : -1;
+      if (deltaY) {
+        return direction * (wheelDeltaY / deltaY);
+      }
+
+      return 0;
+    };
+
+    const onMousewheel = (event) => {
+      scrollY = lastY + wheelDistance(event);
+      lastY = scrollY;
+      
+      setTransform(this.contentRef.style, `translate3d(0,${-scrollY}px,0)`);
+      onFinish();
+    }
+
     return {
       touchstart: (evt: React.TouchEvent<HTMLDivElement>) => onStart(evt.touches[0].pageY),
       mousedown: (evt: React.MouseEvent<HTMLDivElement>) => onStart(evt.pageY),
@@ -139,6 +158,8 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
         evt.preventDefault();
         onMove(evt.pageY);
       },
+      mouseover: () => onFinish(),
+      mousewheel: (evt: React.WheelEvent<HTMLDivElement>) => onMousewheel(evt),
       touchend: () => onFinish(),
       touchcancel: () => onFinish(),
       mouseup: () => onFinish(),
