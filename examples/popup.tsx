@@ -1,5 +1,3 @@
-/* tslint:disable:no-console */
-
 import 'rmc-picker/assets/index.less';
 import 'rmc-picker/assets/popup.less';
 import Picker from '../src/Picker';
