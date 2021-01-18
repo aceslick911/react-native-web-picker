@@ -75,6 +75,7 @@ class Demo extends React.Component<any, any> {
             onDismiss={this.onDismiss}
             onOk={this.onOk}
             value={this.state.value}
+            maskClosable={false}
           >
             <button disabled={this.state.disabled}>{'open'}</button>
           </Popup>
