@@ -2,6 +2,7 @@ import * as React from 'react';
 import Modal from 'rmc-dialog';
 import PopupMixin from './PopupMixin';
 import Touchable from 'rmc-feedback';
+import 'rmc-picker/assets/popup.less';
 
 const getModal = (props, visible, { getContent, hide, onDismiss, onOk }) => {
   if (!visible) {
@@ -18,6 +19,7 @@ const getModal = (props, visible, { getContent, hide, onDismiss, onOk }) => {
       maskTransitionName={props.maskTransitionName}
       onClose={hide}
       style={props.style}
+      maskClosable={false}
     >
       <div>
         <div className={`${prefixCls}-header`}>

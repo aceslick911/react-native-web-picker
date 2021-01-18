@@ -2,6 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { IPickerProps } from './PickerTypes';
 import PickerMixin from './PickerMixin';
+import 'rmc-picker/assets/index.less';
 
 export interface IPickerProp {
   select: (...arg) => void;
@@ -64,7 +65,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
           _velocity = (y - _y) / (now - _time);
           if (now - _time >= minInterval) {
             _velocity = now - _time <= maxInterval ? _velocity : 0;
-            _y = y;
+            _y = y <= 0 ? 0 : y;
             _time = now;
           }
         },
@@ -78,15 +79,13 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
       return recorder;
     })();
 
-    const onFinish = () => {
+    const onFinish = (velocityFactor = 2) => {
       isMoving = false;
       let targetY = scrollY;
-
       const height = ((this.props.children as any).length - 1) * this.itemHeight;
-
       let time = .3;
 
-      const velocity = Velocity.getVelocity(targetY) * 4;
+      const velocity = (targetY < height ? (Velocity.getVelocity(targetY) * velocityFactor) : 0) || 0;
       if (velocity) {
         targetY = velocity * 40 + targetY;
         time = Math.abs(velocity) * .1;
@@ -128,6 +127,28 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
       setTransform(this.contentRef.style, `translate3d(0,${-scrollY}px,0)`);
     };
 
+    const wheelDistance = (evt) => {
+      const { wheelDeltaY, deltaY } = evt;
+
+      const direction = (evt.detail < 0 || evt.wheelDelta > 0) ? 1 : -1;
+      if (deltaY) {
+        return direction * (wheelDeltaY / deltaY);
+      }
+
+      return 0;
+    };
+
+    const onMousewheel = (event) => {
+      lastY = scrollY;
+      let distance = wheelDistance(event);
+      if (distance < 10) {
+        distance = distance * 6;
+      }
+      scrollY = lastY + distance;
+      setTransform(this.contentRef.style, `translate3d(0,${-scrollY}px,0)`);
+      onFinish(0.04);
+    }
+
     return {
       touchstart: (evt: React.TouchEvent<HTMLDivElement>) => onStart(evt.touches[0].pageY),
       mousedown: (evt: React.MouseEvent<HTMLDivElement>) => onStart(evt.pageY),
@@ -139,6 +160,12 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
         evt.preventDefault();
         onMove(evt.pageY);
       },
+      mouseover: (evt: React.MouseEvent<HTMLDivElement>) => {
+        if (!evt.buttons) {
+          onFinish();
+        }
+      },
+      mousewheel: (evt: React.WheelEvent<HTMLDivElement>) => onMousewheel(evt),
       touchend: () => onFinish(),
       touchcancel: () => onFinish(),
       mouseup: () => onFinish(),
