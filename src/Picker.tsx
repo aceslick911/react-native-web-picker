@@ -86,7 +86,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
 
       let time = .3;
 
-      const velocity = Velocity.getVelocity(targetY) * 2;
+      const velocity = Velocity.getVelocity(targetY) * 4;
       if (velocity) {
         targetY = velocity * 40 + targetY;
         time = Math.abs(velocity) * .1;
@@ -140,7 +140,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
     };
 
     const onMousewheel = (event) => {
-      scrollY = lastY + wheelDistance(event);
+      scrollY = lastY + wheelDistance(event) + startY;
       lastY = scrollY;
       
       setTransform(this.contentRef.style, `translate3d(0,${-scrollY}px,0)`);
