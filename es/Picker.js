@@ -25,6 +25,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 import * as React from 'react';
 import classNames from 'classnames';
 import PickerMixin from './PickerMixin';
+import 'rmc-picker/assets/index.css';
 ;
 
 var Picker = /*#__PURE__*/function (_React$Component) {
@@ -155,6 +156,25 @@ var Picker = /*#__PURE__*/function (_React$Component) {
         setTransform(_this.contentRef.style, "translate3d(0,".concat(-scrollY, "px,0)"));
       };
 
+      var wheelDistance = function wheelDistance(evt) {
+        var wheelDeltaY = evt.wheelDeltaY,
+            deltaY = evt.deltaY;
+        var direction = evt.detail < 0 || evt.wheelDelta > 0 ? 1 : -1;
+
+        if (deltaY) {
+          return direction * (wheelDeltaY / deltaY);
+        }
+
+        return 0;
+      };
+
+      var onMousewheel = function onMousewheel(event) {
+        scrollY = lastY + wheelDistance(event) + startY;
+        lastY = scrollY;
+        setTransform(_this.contentRef.style, "translate3d(0,".concat(-scrollY, "px,0)"));
+        onFinish();
+      };
+
       return {
         touchstart: function touchstart(evt) {
           return onStart(evt.touches[0].pageY);
@@ -172,6 +192,9 @@ var Picker = /*#__PURE__*/function (_React$Component) {
         },
         mouseover: function mouseover() {
           return onFinish();
+        },
+        mousewheel: function mousewheel(evt) {
+          return onMousewheel(evt);
         },
         touchend: function touchend() {
           return onFinish();

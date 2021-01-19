@@ -7,6 +7,7 @@ export interface IPopupPickerProps {
     dismissText?: string | React.ReactElement<any>;
     okText?: string | React.ReactElement<any>;
     title?: string | React.ReactElement<any>;
+    maskClosable?: boolean;
     visible?: boolean;
     disabled?: boolean;
     onOk?: (value?: any) => void;

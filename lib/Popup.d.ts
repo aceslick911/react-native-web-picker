@@ -1,4 +1,5 @@
 import * as React from 'react';
+import 'rmc-picker/assets/popup.less';
 declare const _default: {
     new (props: any): {
         picker: any;

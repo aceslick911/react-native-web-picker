@@ -2,6 +2,7 @@ import * as React from 'react';
 import Modal from 'rmc-dialog';
 import PopupMixin from './PopupMixin';
 import Touchable from 'rmc-feedback';
+import 'rmc-picker/assets/popup.css';
 
 var getModal = function getModal(props, visible, _ref) {
   var getContent = _ref.getContent,
@@ -23,7 +24,7 @@ var getModal = function getModal(props, visible, _ref) {
     maskTransitionName: props.maskTransitionName,
     onClose: hide,
     style: props.style,
-    maskClosable: false
+    maskClosable: props.maskClosable
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "".concat(prefixCls, "-header")
   }, /*#__PURE__*/React.createElement(Touchable, {

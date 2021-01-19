@@ -1,7 +1,6 @@
-
-import Picker from '../src/Picker';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import Picker from '../src/Picker';
 import Popup from '../src/Popup';
 
 class Demo extends React.Component<any, any> {

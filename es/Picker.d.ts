@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IPickerProps } from './PickerTypes';
+import 'rmc-picker/assets/index.less';
 export interface IPickerProp {
     select: (...arg: any[]) => void;
     doScrollingComplete: (...arg: any[]) => void;
