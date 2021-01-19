@@ -2,6 +2,7 @@ import * as React from 'react';
 import Modal from 'rmc-dialog';
 import PopupMixin from './PopupMixin';
 import Touchable from 'rmc-feedback';
+import 'rmc-picker/assets/popup.less';
 
 const getModal = (props, visible, { getContent, hide, onDismiss, onOk }) => {
   if (!visible) {

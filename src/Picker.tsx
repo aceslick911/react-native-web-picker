@@ -2,6 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { IPickerProps } from './PickerTypes';
 import PickerMixin from './PickerMixin';
+import 'rmc-picker/assets/index.less';
 
 export interface IPickerProp {
   select: (...arg) => void;

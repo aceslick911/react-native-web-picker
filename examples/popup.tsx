@@ -1,5 +1,4 @@
-import 'rmc-picker/assets/index.less';
-import 'rmc-picker/assets/popup.less';
+
 import Picker from '../src/Picker';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
