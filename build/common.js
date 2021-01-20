@@ -28697,7 +28697,7 @@ var Picker = /*#__PURE__*/function (_React$Component) {
 
             if (now - _time >= minInterval) {
               _velocity = now - _time <= maxInterval ? _velocity : 0;
-              _y = y;
+              _y = y <= 0 ? 0 : y;
               _time = now;
             }
           },
@@ -28713,11 +28713,12 @@ var Picker = /*#__PURE__*/function (_React$Component) {
       }();
 
       var onFinish = function onFinish() {
+        var velocityFactor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
         isMoving = false;
         var targetY = scrollY;
         var height = (_this.props.children.length - 1) * _this.itemHeight;
         var time = .3;
-        var velocity = Velocity.getVelocity(targetY) * 4;
+        var velocity = (targetY < height ? Velocity.getVelocity(targetY) * velocityFactor : 0) || 0;
 
         if (velocity) {
           targetY = velocity * 40 + targetY;
@@ -28775,10 +28776,16 @@ var Picker = /*#__PURE__*/function (_React$Component) {
       };
 
       var onMousewheel = function onMousewheel(event) {
-        scrollY = lastY + wheelDistance(event) + startY;
         lastY = scrollY;
+        var distance = wheelDistance(event);
+
+        if (distance < 10) {
+          distance = distance * 6;
+        }
+
+        scrollY = lastY + distance;
         setTransform(_this.contentRef.style, "translate3d(0,".concat(-scrollY, "px,0)"));
-        onFinish();
+        onFinish(0.04);
       };
 
       return {

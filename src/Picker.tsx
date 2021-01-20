@@ -65,7 +65,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
           _velocity = (y - _y) / (now - _time);
           if (now - _time >= minInterval) {
             _velocity = now - _time <= maxInterval ? _velocity : 0;
-            _y = y;
+            _y = y <= 0 ? 0 : y;
             _time = now;
           }
         },
@@ -79,15 +79,13 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
       return recorder;
     })();
 
-    const onFinish = () => {
+    const onFinish = (velocityFactor = 1) => {
       isMoving = false;
       let targetY = scrollY;
-
       const height = ((this.props.children as any).length - 1) * this.itemHeight;
-
       let time = .3;
 
-      const velocity = Velocity.getVelocity(targetY) * 4;
+      const velocity = (targetY < height ? (Velocity.getVelocity(targetY) * velocityFactor) : 0) || 0;
       if (velocity) {
         targetY = velocity * 40 + targetY;
         time = Math.abs(velocity) * .1;
@@ -141,11 +139,14 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
     };
 
     const onMousewheel = (event) => {
-      scrollY = lastY + wheelDistance(event) + startY;
       lastY = scrollY;
-      
+      let distance = wheelDistance(event);
+      if (distance < 10) {
+        distance = distance * 6;
+      }
+      scrollY = lastY + distance;
       setTransform(this.contentRef.style, `translate3d(0,${-scrollY}px,0)`);
-      onFinish();
+      onFinish(0.04);
     }
 
     return {
