@@ -197,6 +197,11 @@ var Picker = /*#__PURE__*/function (_React$Component) {
           evt.preventDefault();
           onMove(evt.pageY);
         },
+        mouseover: function mouseover(evt) {
+          if (!evt.buttons) {
+            onFinish();
+          }
+        },
         mousewheel: function mousewheel(evt) {
           return onMousewheel(evt);
         },
