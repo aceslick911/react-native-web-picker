@@ -28803,9 +28803,6 @@ var Picker = /*#__PURE__*/function (_React$Component) {
           evt.preventDefault();
           onMove(evt.pageY);
         },
-        mouseover: function mouseover() {
-          return onFinish();
-        },
         mousewheel: function mousewheel(evt) {
           return onMousewheel(evt);
         },
