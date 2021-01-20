@@ -28713,7 +28713,7 @@ var Picker = /*#__PURE__*/function (_React$Component) {
       }();
 
       var onFinish = function onFinish() {
-        var velocityFactor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var velocityFactor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
         isMoving = false;
         var targetY = scrollY;
         var height = (_this.props.children.length - 1) * _this.itemHeight;

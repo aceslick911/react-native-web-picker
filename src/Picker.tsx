@@ -79,7 +79,7 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
       return recorder;
     })();
 
-    const onFinish = (velocityFactor = 1) => {
+    const onFinish = (velocityFactor = 2) => {
       isMoving = false;
       let targetY = scrollY;
       const height = ((this.props.children as any).length - 1) * this.itemHeight;
